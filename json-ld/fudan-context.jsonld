@@ -1,0 +1,41 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "fudan": "https://www.fudan.edu.cn/vocab#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "sameAs": "schema:sameAs",
+    "address": "schema:address",
+    "addressLocality": "schema:addressLocality",
+    "addressCountry": "schema:addressCountry",
+    "dataset": "schema:dataset",
+    "Dataset": "schema:Dataset",
+    "distribution": "schema:distribution",
+    "DataDownload": "schema:DataDownload",
+    "contentUrl": "schema:contentUrl",
+    "identifier": "schema:identifier",
+    "dataverse": "fudan:dataverse",
+    "repository": "fudan:repository"
+  },
+  "@type": "schema:CollegeOrUniversity",
+  "name": "Fudan University",
+  "url": "https://www.fudan.edu.cn",
+  "description": "A major public research university in Shanghai, China, operating the Fudan University Dataverse research data repository and the China Open Data Index.",
+  "address": {
+    "@type": "schema:PostalAddress",
+    "addressLocality": "Shanghai",
+    "addressCountry": "CN"
+  },
+  "sameAs": [
+    "https://www.fudan.edu.cn/en/",
+    "https://github.com/FudanUniversity",
+    "https://www.linkedin.com/school/fudan-university/"
+  ],
+  "fudan:repository": {
+    "@type": "schema:Dataset",
+    "name": "Fudan University Dataverse (Research Data Repository)",
+    "url": "https://dvn.fudan.edu.cn",
+    "description": "Research data repository built on the Dataverse open-source platform, hosting survey, census, and social-science datasets. Geo-restricted to mainland China access."
+  }
+}
