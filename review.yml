@@ -1,0 +1,42 @@
+---
+name: Fudan University
+description: Fudan University public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/fudan/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 1
+    summary: >-
+      No openly documented, publicly reachable developer API program was found
+      for Fudan University. The official website and English site resolve. A
+      Fudan University Dataverse research-data repository exists at
+      dvn.fudan.edu.cn; the host returns HTTP 200 but serves an access-forbidden
+      ("禁止访问") page to requests from outside mainland China, so the standard
+      Dataverse REST API and OAI-PMH endpoints could not be verified live and
+      are effectively geo-gated. The official GitHub organization
+      (github.com/FudanUniversity) exists but has zero public repositories. No
+      endpoints, keys, or specs were fabricated; only confirmed properties are
+      cataloged.
+    endpoints:
+      - url: https://www.fudan.edu.cn
+        status: 200
+        note: Official Fudan University website resolves.
+      - url: https://www.fudan.edu.cn/en/
+        status: 200
+        note: English-language site resolves.
+      - url: https://dvn.fudan.edu.cn
+        status: 200
+        note: Fudan Dataverse host responds but body is an access-forbidden page from outside China.
+      - url: https://dvn.fudan.edu.cn/api/info/version
+        status: 200
+        note: Standard Dataverse API path; returns geo-block page, not JSON. API gated.
+      - url: https://dvn.fudan.edu.cn/oai?verb=Identify
+        status: 200
+        note: Standard Dataverse OAI-PMH path; returns geo-block page, not OAI XML. Gated.
+      - url: https://github.com/FudanUniversity
+        status: 200
+        note: Official GitHub org exists, links to fudan.edu.cn, but no public repositories.
+      - url: https://www.linkedin.com/school/fudan-university/
+        status: 999
+        note: LinkedIn school page exists; 999 is LinkedIn anti-bot response, not absence.

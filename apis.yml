@@ -1,0 +1,68 @@
+---
+aid: fudan
+name: Fudan University
+description: >-
+  Fudan University is a major public research university in Shanghai, China,
+  ranked #84 in the QS World University Rankings 2025. It operates a Dataverse
+  research data repository (Fudan University Dataverse, launched in 2014) hosting
+  tens of thousands of files across social science, demography, and economics
+  datasets, and maintains the China Open Data Index via its Digital and Mobile
+  Governance Laboratory. As of this review, Fudan exposes no openly documented,
+  publicly reachable developer API program: its Dataverse host (which by the
+  Dataverse software design provides a native REST API and OAI-PMH) returns an
+  access-forbidden page to requests originating outside mainland China, and the
+  official GitHub organization carries no public repositories.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/fudan/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Data
+  - China
+  - Shanghai
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: fudan:dataverse
+    name: Fudan University Dataverse (Research Data Repository)
+    description: >-
+      Fudan University Dataverse is a research data repository built on the
+      Dataverse open-source platform, hosting survey, census, and social-science
+      datasets contributed by Fudan researchers. The Dataverse software exposes a
+      native REST/Search API and OAI-PMH metadata harvesting by design; however,
+      from outside mainland China the host (dvn.fudan.edu.cn) returns an
+      access-forbidden ("禁止访问") page, so the API surface is geo-restricted and
+      not publicly documented. Endpoint paths below reflect standard Dataverse
+      conventions, not Fudan-published documentation, and could not be verified
+      live.
+    humanURL: https://dvn.fudan.edu.cn
+    tags: [ Research Data, Open Data, Dataverse, OAI-PMH, Gated ]
+    properties:
+      - type: Documentation
+        url: https://dvn.fudan.edu.cn
+common:
+  - type: Website
+    url: https://www.fudan.edu.cn
+  - type: Website
+    url: https://www.fudan.edu.cn/en/
+  - type: GitHub
+    url: https://github.com/FudanUniversity
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/fudan-university/
+  - type: Plans
+    url: plans/fudan-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/fudan-rate-limits.yml
+  - type: FinOps
+    url: finops/fudan-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
