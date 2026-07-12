@@ -47,6 +47,10 @@ apis:
       - type: Documentation
         url: https://dvn.fudan.edu.cn
 common:
+  - type: VulnerabilityDisclosure
+    url: security/fudan-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/fudan-domain-security.yml
   - type: Website
     url: https://www.fudan.edu.cn
   - type: Website
