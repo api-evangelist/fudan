@@ -2,20 +2,20 @@
   "repo": "fudan",
   "feeds": [
     {
-      "source": "https://www.fudan.edu.cn/en/",
-      "feed_url": "https://www.fudan.edu.cn/en/",
+      "source": "https://xxb.fudan.edu.cn/",
+      "feed_url": "https://xxb.fudan.edu.cn/",
       "title": "",
       "saved": 0,
       "method": "none"
     },
     {
-      "source": "https://xxb.fudan.edu.cn/",
-      "feed_url": "https://xxb.fudan.edu.cn/",
+      "source": "https://www.fudan.edu.cn/en/",
+      "feed_url": "https://www.fudan.edu.cn/en/",
       "title": "",
       "saved": 0,
       "method": "none"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-30T22:33:40Z"
+  "fetched": "2026-09-06T19:17:18Z"
 }
