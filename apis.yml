@@ -96,81 +96,128 @@ x-coverage:
     - url: https://www.fudan.edu.cn/llms.txt
       status: 404
 apis:
-  - aid: fudan:identity-oidc
-    name: Fudan University Unified Identity — OpenID Connect
-    x-operator: institution
-    description: >-
-      The OpenID Connect provider Fudan operates for campus single sign-on at
-      id.fudan.edu.cn. Issuer https://id.fudan.edu.cn/idp. The discovery document and the
-      JWKS are both served anonymously and were captured live on 2026-08-30; the endpoints
-      they point at require a client_id issued by the Information Technology Office, and
-      there is no public client registration. The OpenAPI in this repository is DERIVED from
-      Fudan's own discovery document, not published by Fudan. One defect is recorded as
-      observed: the end-session endpoint is declared under the member name
-      "end_session_endpoint " with a trailing space, so a strict discovery client will miss it.
-    humanURL: https://id.fudan.edu.cn/
-    baseURL: https://id.fudan.edu.cn/idp
-    tags: [ Identity Federation, Single Sign-On, OpenID Connect, Undocumented ]
-    properties:
-      - type: OpenAPI
-        url: openapi/fudan-identity-openapi.yml
-      - type: Authentication
-        url: authentication/fudan-authentication.yml
-      - type: Scopes
-        url: scopes/fudan-scopes.yml
-      - type: Errors
-        url: errors/fudan-errors.yml
-      - type: JSONSchema
-        url: json-schema/fudan-openid-configuration-schema.json
-      - type: Examples
-        url: examples/fudan-openid-configuration.json
-      - type: Vocabulary
-        url: vocabulary/fudan-vocabulary.yml
-      - type: Conformance
-        url: conformance/fudan-conformance.yml
-  - aid: fudan:identity-saml
-    name: Fudan University Shibboleth Identity Provider (CARSI / eduGAIN)
-    x-operator: institution
-    description: >-
-      Fudan's SAML 2.0 identity provider, entityID https://idpfudan.fudan.edu.cn/idp/shibboleth,
-      asserting scope fudan.edu.cn. It is registered with CARSI, China's education federation,
-      and interfederated into eduGAIN, where it has carried entity id 671764 since 2020-02-12.
-      Fudan serves the metadata itself: a 14,734-byte EntityDescriptor with both an
-      IDPSSODescriptor and an AttributeAuthorityDescriptor, supporting SAML 2.0, SAML 1.1 and
-      the Shibboleth 1.0 profile. This is a machine-readable institutional surface that almost
-      no university in this cohort has catalogued, and it is the basis of the shibboleth and
-      saml conformance recorded here. One operational note: the self-served copy still carries
-      the stock Shibboleth mdui:DisplayName ("A Name for the IdP at idpfudan.fudan.edu.cn"),
-      while the CARSI-registered copy carries the proper English and Chinese names.
-    humanURL: https://idpfudan.fudan.edu.cn/idp/shibboleth
-    baseURL: https://idpfudan.fudan.edu.cn/idp
-    tags: [ Identity Federation, SAML, Shibboleth, eduGAIN, CARSI ]
-    properties:
-      - type: Metadata
-        url: examples/fudan-idp-saml-metadata.xml
-      - type: Authentication
-        url: authentication/fudan-authentication.yml
-      - type: Conformance
-        url: conformance/fudan-conformance.yml
-  - aid: fudan:research-data-platform
-    name: Fudan University Social Science Data Platform (复旦大学社会科学数据平台)
-    x-operator: institution
-    description: >-
-      Fudan's institutional research data repository, operated by the Research Center for
-      Social Sciences. It moved off Dataverse: dvn.fudan.edu.cn now only meta-refreshes to
-      rdr.fudan.edu.cn/datahome, which is a Vue single-page application over a Spring Boot
-      backend. That backend is live and returns JSON, but it is undocumented, session-bound,
-      and refuses unauthenticated calls with HTTP 200 and an in-body status 4000. No Dataverse
-      REST API, no OAI-PMH and no published API of any kind responds on either host, so no
-      contract is saved for this surface. re3data still records the software as Dataverse and
-      the PID system as Handle; that record was last updated 2025-07-24 and is stale.
-    humanURL: https://rdr.fudan.edu.cn/datahome/open/dataResource
-    tags: [ Research Data, Research Repository, Undocumented, Gated ]
-    properties:
-      - type: Errors
-        url: errors/fudan-errors.yml
-      - type: Lifecycle
-        url: lifecycle/fudan-lifecycle.yml
+- aid: fudan:identity-saml
+  name: Fudan University Shibboleth Identity Provider (CARSI / eduGAIN)
+  x-operator: institution
+  description: >-
+    Fudan's SAML 2.0 identity provider, entityID https://idpfudan.fudan.edu.cn/idp/shibboleth, asserting
+    scope fudan.edu.cn. It is registered with CARSI, China's education federation, and interfederated
+    into eduGAIN, where it has carried entity id 671764 since 2020-02-12. Fudan serves the metadata itself:
+    a 14,734-byte EntityDescriptor with both an IDPSSODescriptor and an AttributeAuthorityDescriptor,
+    supporting SAML 2.0, SAML 1.1 and the Shibboleth 1.0 profile. This is a machine-readable institutional
+    surface that almost no university in this cohort has catalogued, and it is the basis of the shibboleth
+    and saml conformance recorded here. One operational note: the self-served copy still carries the stock
+    Shibboleth mdui:DisplayName ("A Name for the IdP at idpfudan.fudan.edu.cn"), while the CARSI-registered
+    copy carries the proper English and Chinese names.
+  humanURL: https://idpfudan.fudan.edu.cn/idp/shibboleth
+  baseURL: https://idpfudan.fudan.edu.cn/idp
+  tags:
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - eduGAIN
+  - CARSI
+  properties:
+  - type: Metadata
+    url: examples/fudan-idp-saml-metadata.xml
+  - type: Authentication
+    url: authentication/fudan-authentication.yml
+  - type: Conformance
+    url: conformance/fudan-conformance.yml
+- aid: fudan:research-data-platform
+  name: Fudan University Social Science Data Platform (复旦大学社会科学数据平台)
+  x-operator: institution
+  description: >-
+    Fudan's institutional research data repository, operated by the Research Center for Social Sciences.
+    It moved off Dataverse: dvn.fudan.edu.cn now only meta-refreshes to rdr.fudan.edu.cn/datahome, which
+    is a Vue single-page application over a Spring Boot backend. That backend is live and returns JSON,
+    but it is undocumented, session-bound, and refuses unauthenticated calls with HTTP 200 and an in-body
+    status 4000. No Dataverse REST API, no OAI-PMH and no published API of any kind responds on either
+    host, so no contract is saved for this surface. re3data still records the software as Dataverse and
+    the PID system as Handle; that record was last updated 2025-07-24 and is stale.
+  humanURL: https://rdr.fudan.edu.cn/datahome/open/dataResource
+  tags:
+  - Research Data
+  - Research Repository
+  - Undocumented
+  - Gated
+  properties:
+  - type: Errors
+    url: errors/fudan-errors.yml
+  - type: Lifecycle
+    url: lifecycle/fudan-lifecycle.yml
+- aid: fudan:fudan-authorization-api
+  name: Fudan University Authorization API
+  description: End-user authentication and token issuance.
+  humanURL: https://id.fudan.edu.cn/
+  baseURL: https://id.fudan.edu.cn/idp
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/fudan-authorization-api-openapi.yml
+  - type: Authentication
+    url: authentication/fudan-authentication.yml
+  - type: Scopes
+    url: scopes/fudan-scopes.yml
+  - type: Errors
+    url: errors/fudan-errors.yml
+  - type: JSONSchema
+    url: json-schema/fudan-openid-configuration-schema.json
+  - type: Examples
+    url: examples/fudan-openid-configuration.json
+  - type: Vocabulary
+    url: vocabulary/fudan-vocabulary.yml
+  - type: Conformance
+    url: conformance/fudan-conformance.yml
+- aid: fudan:fudan-discovery-api
+  name: Fudan University Discovery API
+  description: Machine-readable metadata about the provider.
+  humanURL: https://id.fudan.edu.cn/
+  baseURL: https://id.fudan.edu.cn/idp
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/fudan-discovery-api-openapi.yml
+  - type: Authentication
+    url: authentication/fudan-authentication.yml
+  - type: Scopes
+    url: scopes/fudan-scopes.yml
+  - type: Errors
+    url: errors/fudan-errors.yml
+  - type: JSONSchema
+    url: json-schema/fudan-openid-configuration-schema.json
+  - type: Examples
+    url: examples/fudan-openid-configuration.json
+  - type: Vocabulary
+    url: vocabulary/fudan-vocabulary.yml
+  - type: Conformance
+    url: conformance/fudan-conformance.yml
+- aid: fudan:fudan-identity-api
+  name: Fudan University Identity API
+  description: Claims about the authenticated end user.
+  humanURL: https://id.fudan.edu.cn/
+  baseURL: https://id.fudan.edu.cn/idp
+  tags:
+  - Identity
+  properties:
+  - type: OpenAPI
+    url: openapi/fudan-identity-api-openapi.yml
+  - type: Authentication
+    url: authentication/fudan-authentication.yml
+  - type: Scopes
+    url: scopes/fudan-scopes.yml
+  - type: Errors
+    url: errors/fudan-errors.yml
+  - type: JSONSchema
+    url: json-schema/fudan-openid-configuration-schema.json
+  - type: Examples
+    url: examples/fudan-openid-configuration.json
+  - type: Vocabulary
+    url: vocabulary/fudan-vocabulary.yml
+  - type: Conformance
+    url: conformance/fudan-conformance.yml
 common:
   - type: Website
     url: https://www.fudan.edu.cn
