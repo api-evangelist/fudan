@@ -1,0 +1,107 @@
+x-method: derived
+name: Fudan University — domain standard conformance
+generated: '2026-08-30'
+method: probed
+regime: education
+source: live probes on 2026-08-30
+x-operator: institution
+summary: >-
+  Two of the twelve education-regime standards are conformed to with live, machine-readable
+  evidence, both of them in identity federation. The rest were probed and are absent. This
+  file records only what a probe actually returned; nothing is claimed from prose.
+standards:
+  - standard: shibboleth
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://idpfudan.fudan.edu.cn/idp/shibboleth
+        status: 200
+        content_type: application/xml;charset=UTF-8
+        location: >-
+          EntityDescriptor/IDPSSODescriptor@protocolSupportEnumeration contains
+          "urn:mace:shibboleth:1.0"; SingleSignOnService Location
+          https://idpfudan.fudan.edu.cn/idp/profile/Shibboleth/SSO with Binding
+          urn:mace:shibboleth:1.0:profiles:AuthnRequest
+        note: Shibboleth Identity Provider metadata served by Fudan itself.
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        location: >-
+          Entity 671764, entityid https://idpfudan.fudan.edu.cn/idp/shibboleth,
+          regauth https://www.carsi.edu.cn, code CARSI, scopes fudan.edu.cn,
+          first_seen 2020-02-12
+  - standard: saml
+    status: conformant
+    operator: institution
+    evidence:
+      - url: https://idpfudan.fudan.edu.cn/idp/shibboleth
+        status: 200
+        location: >-
+          IDPSSODescriptor@protocolSupportEnumeration contains
+          "urn:oasis:names:tc:SAML:2.0:protocol" and
+          "urn:oasis:names:tc:SAML:1.1:protocol"; SingleSignOnService bindings
+          HTTP-POST, HTTP-POST-SimpleSign and HTTP-Redirect; AttributeAuthorityDescriptor
+          present with SAML 2.0 and SAML 1.1 SOAP AttributeQuery endpoints on port 8443;
+          shibmd:Scope regexp="false" is fudan.edu.cn
+        capture: examples/fudan-idp-saml-metadata.xml
+  - standard: oai-pmh
+    status: absent
+    note: >-
+      Probed on every plausible host. The repository's own former Dataverse OAI-PMH path
+      no longer resolves, and the library's /oai path returns an unrelated HTML page.
+    evidence:
+      - url: https://dvn.fudan.edu.cn/oai?verb=Identify
+        status: 404
+      - url: https://rdr.fudan.edu.cn/oai?verb=Identify
+        status: 404
+      - url: https://rdr.fudan.edu.cn/oai/request?verb=Identify
+        status: 404
+      - url: https://library.fudan.edu.cn/oai?verb=Identify
+        status: 200
+        note: HTTP 200 but the body is a 2,329-byte generic HTML page, not an OAI-PMH response. Soft 404.
+  - standard: datacite
+    status: absent
+    note: >-
+      The institutional research data repository mints Handles, not DataCite DOIs.
+    evidence:
+      - url: https://www.re3data.org/api/v1/repository/r3d100012775
+        status: 200
+        location: 'r3d:pidSystem = hdl'
+  - standard: scim
+    status: absent
+    note: No SCIM endpoint found on the identity provider or any campus host.
+    evidence:
+      - url: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+        status: 200
+        note: Discovery document declares no SCIM or registration endpoint.
+  - standard: orcid
+    status: absent
+  - standard: crossref
+    status: absent
+  - standard: lti
+    status: absent
+  - standard: oneroster
+    status: absent
+  - standard: ed-fi
+    status: absent
+  - standard: caliper
+    status: absent
+  - standard: qti
+    status: absent
+other_standards_observed:
+  - standard: OpenID Connect Discovery 1.0
+    status: partial
+    note: >-
+      A discovery document is published and served correctly, but the end-session endpoint
+      is declared under the member name "end_session_endpoint " with a TRAILING SPACE. A
+      strict OpenID Connect Discovery client will not find that endpoint. Recorded as
+      observed; not corrected.
+    evidence:
+      - url: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+        status: 200
+        capture: examples/fudan-openid-configuration.json
+  - standard: JSON Web Key Set (RFC 7517)
+    status: conformant
+    evidence:
+      - url: https://id.fudan.edu.cn/idp/oidc/getPublicKey
+        status: 200
+        capture: examples/fudan-idp-jwks.json

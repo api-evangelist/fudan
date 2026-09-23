@@ -1,0 +1,63 @@
+openapi: 3.2.0
+info:
+  title: Fudan University Unified (OpenID Connect Provider) Identity…
+  version: '2026-08-30'
+  summary: The OpenID Connect provider Fudan University operates for campus single sign-on.
+  description: Fudan University operates its own unified identity service at id.fudan.edu.cn.
+  contact:
+    name: Fudan University Information Technology Office (信息化办公室)
+    url: https://xxb.fudan.edu.cn/
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+    derived_from: examples/fudan-openid-configuration.json
+    captured: '2026-08-30'
+    note: Derived from the institution's own live OpenID Connect discovery document. Fudan publishes no OpenAPI of its own for this service; this is API Evangelist's description of Fudan's declared endpoints, not a Fudan-published contract.
+servers:
+- url: https://id.fudan.edu.cn/idp
+  description: 'Issuer, exactly as declared by the discovery document ("issuer": "https://id.fudan.edu.cn/idp"). Probed live 2026-08-30.'
+tags:
+- name: Identity
+  description: Claims about the authenticated end user.
+paths:
+  /oidc/getUserInfo:
+    get:
+      tags:
+      - Identity
+      operationId: getUserInfo
+      summary: UserInfo endpoint
+      description: The userinfo_endpoint declared by the discovery document. The claims listed are exactly the declared claims_supported. Requires an access token issued by Fudan; not exercised.
+      x-provenance: inferred-from-oidc-core
+      security:
+      - fudanBearer: []
+      responses:
+        '200':
+          description: Claims about the authenticated end user.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Properties are the provider's declared claims_supported.
+                properties:
+                  sub:
+                    type: string
+                  iss:
+                    type: string
+                  aud:
+                    type: string
+                  uid:
+                    type: string
+                  auth_time:
+                    type: integer
+                  iat:
+                    type: integer
+                  exp:
+                    type: integer
+components:
+  securitySchemes:
+    fudanBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access token issued by the Fudan token endpoint. Clients are provisioned by the Fudan Information Technology Office; there is no public client registration and no public developer portal.

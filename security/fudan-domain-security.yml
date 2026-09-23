@@ -1,3 +1,4 @@
+x-method: derived
 generated: '2026-07-11'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
@@ -12,6 +13,26 @@ hosts:
   tls_version: TLSv1.3
   cert_expires: Apr 10 23:59:59 2027 GMT
   hsts: false
+  note: Now serves only a meta-refresh redirect to https://rdr.fudan.edu.cn/datahome/ (probed 2026-08-30).
+- host: id.fudan.edu.cn
+  https: true
+  tls_version: TLSv1.2+
+  cert_expires: Apr 10 23:59:59 2027 GMT
+  hsts: false
+  note: OpenID Connect provider. Discovery document and JWKS served without authentication.
+- host: idpfudan.fudan.edu.cn
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Apr 10 23:59:59 2027 GMT
+  hsts: false
+  note: Shibboleth SAML 2.0 identity provider registered in CARSI/eduGAIN. SOAP attribute query on port
+    8443.
+- host: rdr.fudan.edu.cn
+  https: true
+  tls_version: TLSv1.2+
+  cert_expires: Apr 10 23:59:59 2027 GMT
+  hsts: false
+  note: Research data platform. Replaced dvn.fudan.edu.cn.
 domains:
 - domain: fudan.edu.cn
   dnssec: false
@@ -19,3 +40,7 @@ domains:
   spf: true
   dmarc: true
   dmarc_policy: quarantine
+modified: '2026-08-30'
+note: Hosts added 2026-08-30 by the university pipeline after the identity and research-data surfaces
+  were probed. dvn.fudan.edu.cn is retained because it still resolves, but it now only meta-refreshes
+  to rdr.fudan.edu.cn.

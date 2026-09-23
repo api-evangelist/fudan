@@ -1,0 +1,41 @@
+name: Fudan University — published vocabulary
+generated: '2026-08-30'
+method: derived
+source: >-
+  Derived from the only machine-readable vocabularies Fudan publishes: the claims and
+  metadata members of https://id.fudan.edu.cn/idp/.well-known/openid-configuration and the
+  SAML metadata at https://idpfudan.fudan.edu.cn/idp/shibboleth.
+x-operator: institution
+summary: >-
+  Fudan University publishes no domain vocabulary of its own. The terms below are the
+  complete set of named values it exposes machine-readably, all of them from standards
+  vocabularies rather than institutional ones.
+terms:
+  - term: sub
+    source: OpenID Connect claims_supported
+    definition: Subject identifier for the authenticated end user.
+  - term: uid
+    source: OpenID Connect claims_supported
+    definition: >-
+      The only non-standard claim declared. Fudan publishes no definition for it; presumed
+      the campus account identifier. Not verified — the endpoint requires a token.
+  - term: iss
+    source: OpenID Connect claims_supported
+    definition: Issuer, https://id.fudan.edu.cn/idp.
+  - term: aud
+    source: OpenID Connect claims_supported
+    definition: Audience — the Fudan-issued client identifier.
+  - term: auth_time
+    source: OpenID Connect claims_supported
+  - term: iat
+    source: OpenID Connect claims_supported
+  - term: exp
+    source: OpenID Connect claims_supported
+  - term: fudan.edu.cn
+    source: SAML metadata shibmd:Scope regexp="false"
+    definition: >-
+      The single asserted scope of the Fudan identity provider inside the CARSI federation.
+      Every eduPersonPrincipalName the IdP is authorised to assert is scoped to it.
+not_found:
+  - Any institutional data dictionary, code list or controlled vocabulary published by Fudan.
+  - Any documented meaning for the uid claim.

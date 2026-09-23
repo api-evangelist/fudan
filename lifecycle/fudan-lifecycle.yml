@@ -1,0 +1,70 @@
+x-method: derived
+name: Fudan University — surface lifecycle
+generated: '2026-08-30'
+method: probed
+source: live probes on 2026-08-30 compared against this repository's 2026-06-03 review
+x-operator: institution
+summary: >-
+  One migration and one deprecation were confirmed live, and both invalidate claims this
+  repository carried from its 2026-06-03 profile. Recorded here so the correction is
+  auditable rather than silent.
+events:
+  - date_observed: '2026-08-30'
+    surface: Fudan University Social Science Data Platform
+    change: migration
+    from: https://dvn.fudan.edu.cn
+    to: https://rdr.fudan.edu.cn/datahome/
+    detail: >-
+      dvn.fudan.edu.cn now serves a 341-byte HTML document whose only content is
+      <meta http-equiv="refresh" content="0;url=https://rdr.fudan.edu.cn/datahome/">. The
+      new platform is a Vue single-page application with a Spring Boot JSON backend under
+      /datahome, not Dataverse.
+    evidence:
+      - url: https://dvn.fudan.edu.cn
+        status: 200
+        note: Meta-refresh redirect page. NOT the access-forbidden page recorded on 2026-06-03.
+      - url: https://rdr.fudan.edu.cn/datahome/
+        status: 200
+        content_type: text/html
+  - date_observed: '2026-08-30'
+    surface: Dataverse REST API and OAI-PMH on the old repository host
+    change: gone
+    detail: >-
+      This repository's 2026-06-03 entry asserted that Dataverse's native REST API and
+      OAI-PMH were present but geo-blocked, while stating in the same paragraph that the
+      endpoint paths "reflect standard Dataverse conventions, not Fudan-published
+      documentation". Both paths now return 404. The surface was never verified and no
+      longer exists; the entry has been rewritten.
+    evidence:
+      - url: https://dvn.fudan.edu.cn/api/info/version
+        status: 404
+      - url: https://dvn.fudan.edu.cn/oai?verb=Identify
+        status: 404
+      - url: https://rdr.fudan.edu.cn/api/info/version
+        status: 404
+  - date_observed: '2026-08-30'
+    surface: Legacy unified identity system
+    change: retired
+    detail: >-
+      uis.fudan.edu.cn redirects to a notice page titled 旧版统一身份认证系统停止服务公告
+      ("service-termination notice for the old unified identity system"). Current identity
+      traffic is served by id.fudan.edu.cn, and campus services such as xk.fudan.edu.cn
+      redirect there carrying an entityId parameter.
+    evidence:
+      - url: https://uis.fudan.edu.cn/
+        status: 200
+        note: Redirects to /notice.html — service-termination notice.
+      - url: https://xk.fudan.edu.cn/
+        status: 200
+        note: Redirects to id.fudan.edu.cn/ac/#/index?...&entityId=https://xk.fudan.edu.cn
+  - date_observed: '2026-08-30'
+    surface: Third-party registry record
+    change: stale
+    detail: >-
+      re3data record r3d100012775 (last updated 2025-07-24) still describes the repository
+      software as Dataverse. Live probing contradicts it. Recorded so the discrepancy is
+      not mistaken for a Fudan claim.
+    evidence:
+      - url: https://www.re3data.org/api/v1/repository/r3d100012775
+        status: 200
+        location: 'r3d:softwareName = Dataverse; r3d:repositoryURL = https://rdr.fudan.edu.cn/datahome/open/dataResource'

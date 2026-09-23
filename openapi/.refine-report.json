@@ -1,0 +1,26 @@
+{
+  "provider": "fudan",
+  "sources": [
+    "_original/fudan-identity-openapi.yml"
+  ],
+  "outputs": [
+    "fudan-authorization-api-openapi.yml",
+    "fudan-discovery-api-openapi.yml",
+    "fudan-identity-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fudan-identity-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/fudan-identity-openapi_2.yml: archived document superseded by a larger archived document",
+    "fudan-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fudan-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fudan-identity-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

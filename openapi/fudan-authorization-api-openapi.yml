@@ -1,0 +1,145 @@
+openapi: 3.2.0
+info:
+  title: Fudan University Unified Identity (OpenID Connect Provider)…
+  version: '2026-08-30'
+  summary: The OpenID Connect provider Fudan University operates for campus single sign-on.
+  description: Fudan University operates its own unified identity service at id.fudan.edu.cn.
+  contact:
+    name: Fudan University Information Technology Office (信息化办公室)
+    url: https://xxb.fudan.edu.cn/
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+    derived_from: examples/fudan-openid-configuration.json
+    captured: '2026-08-30'
+    note: Derived from the institution's own live OpenID Connect discovery document. Fudan publishes no OpenAPI of its own for this service; this is API Evangelist's description of Fudan's declared endpoints, not a Fudan-published contract.
+servers:
+- url: https://id.fudan.edu.cn/idp
+  description: 'Issuer, exactly as declared by the discovery document ("issuer": "https://id.fudan.edu.cn/idp"). Probed live 2026-08-30.'
+tags:
+- name: Authorization
+  description: End-user authentication and token issuance.
+paths:
+  /authCenter/authenticate:
+    get:
+      tags:
+      - Authorization
+      operationId: authorize
+      summary: Authorization endpoint
+      description: The authorization_endpoint declared by the discovery document. Parameters are the OpenID Connect Core 1.0 authorization request parameters constrained to the values Fudan declares as supported; Fudan publishes no parameter documentation of its own.
+      x-provenance: inferred-from-oidc-core
+      security: []
+      parameters:
+      - name: client_id
+        in: query
+        required: true
+        description: Client identifier issued by Fudan. Not publicly obtainable.
+        schema:
+          type: string
+      - name: response_type
+        in: query
+        required: true
+        description: Declared response_types_supported.
+        schema:
+          type: string
+          enum:
+          - code
+          - token
+          - id_token
+      - name: scope
+        in: query
+        required: true
+        description: Declared scopes_supported contains only "openid".
+        schema:
+          type: string
+          enum:
+          - openid
+      - name: redirect_uri
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uri
+      - name: state
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Redirect to the login interface or back to redirect_uri. Observed live 2026-08-30 as an HTML login shell (HTTP 200, text/html) when called without parameters; the exact redirect behaviour was not exercised because no client credentials are publicly available.
+  /oidc/getOidcToken:
+    post:
+      tags:
+      - Authorization
+      operationId: getOidcToken
+      summary: Token endpoint
+      description: The token_endpoint declared by the discovery document. Declared grant_types_supported are implicit, authorization_code and refresh_token. The HTTP method, request encoding and response body below follow OpenID Connect Core 1.0; Fudan documents none of them and the endpoint was not exercised.
+      x-provenance: inferred-from-oidc-core
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - grant_type
+              - client_id
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - authorization_code
+                  - refresh_token
+                code:
+                  type: string
+                refresh_token:
+                  type: string
+                redirect_uri:
+                  type: string
+                  format: uri
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+      responses:
+        '200':
+          description: Token response. Shape not documented by Fudan and not exercised; id_token signing algorithms are declared as RS256, ES256 and HS256.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  id_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+  /oidc/revokeToken:
+    post:
+      tags:
+      - Authorization
+      operationId: revokeToken
+      summary: End-session / token revocation endpoint
+      description: Declared by the discovery document under the key "end_session_endpoint " — WITH A TRAILING SPACE. That malformed member name is present in the live document (examples/fudan-openid-configuration.json) and means a strict OpenID Connect Discovery client will not find this endpoint at all. Recorded as observed, not corrected. Not exercised.
+      x-provenance: inferred-from-oidc-core
+      x-defect: Discovery document member name is "end_session_endpoint " with a trailing space, which is not the OpenID Connect Discovery 1.0 member name.
+      security:
+      - fudanBearer: []
+      responses:
+        '200':
+          description: Revocation acknowledged. Response body not documented by Fudan.
+components:
+  securitySchemes:
+    fudanBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access token issued by the Fudan token endpoint. Clients are provisioned by the Fudan Information Technology Office; there is no public client registration and no public developer portal.

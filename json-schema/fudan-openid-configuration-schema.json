@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/fudan/main/json-schema/fudan-openid-configuration-schema.json",
+  "title": "Fudan University OpenID Connect discovery document",
+  "description": "Schema derived from the live response of https://id.fudan.edu.cn/idp/.well-known/openid-configuration captured 2026-08-30. Every property and enumerated value below was present in that response; none were added. Note the non-conformant member name 'end_session_endpoint ' (trailing space) — it is modelled as observed rather than corrected.",
+  "x-provenance": {
+    "method": "derived",
+    "source": "https://id.fudan.edu.cn/idp/.well-known/openid-configuration",
+    "derived_from": "examples/fudan-openid-configuration.json",
+    "generated": "2026-08-30",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": ["issuer", "authorization_endpoint", "token_endpoint", "userinfo_endpoint", "jwks_uri"],
+  "properties": {
+    "issuer": { "type": "string", "format": "uri", "const": "https://id.fudan.edu.cn/idp" },
+    "authorization_endpoint": { "type": "string", "format": "uri" },
+    "token_endpoint": { "type": "string", "format": "uri" },
+    "userinfo_endpoint": { "type": "string", "format": "uri" },
+    "jwks_uri": { "type": "string", "format": "uri" },
+    "end_session_endpoint ": {
+      "type": "string",
+      "format": "uri",
+      "description": "Observed member name carries a trailing space in the live document. Not the OpenID Connect Discovery 1.0 member name."
+    },
+    "response_types_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["code", "token", "id_token"] }
+    },
+    "grant_types_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["implicit", "authorization_code", "refresh_token"] }
+    },
+    "scopes_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["openid"] }
+    },
+    "claims_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["sub", "iss", "auth_time", "aud", "exp", "iat", "uid"] }
+    },
+    "subject_types_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["public"] }
+    },
+    "id_token_signing_alg_values_supported": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["RS256", "ES256", "HS256"] }
+    },
+    "request_parameter_supported": { "type": "boolean" }
+  },
+  "additionalProperties": true
+}

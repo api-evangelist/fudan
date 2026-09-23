@@ -1,0 +1,69 @@
+x-method: derived
+name: Fudan University — authentication surfaces
+generated: '2026-08-30'
+method: probed
+source: live probes of id.fudan.edu.cn, idpfudan.fudan.edu.cn and rdr.fudan.edu.cn on 2026-08-30
+x-operator: institution
+summary: >-
+  Fudan University operates its own identity infrastructure — an OpenID Connect provider
+  and a SAML 2.0 Shibboleth identity provider — on hosts under fudan.edu.cn. Both publish
+  machine-readable metadata without authentication. No API key programme, no public client
+  registration and no developer portal was found for either.
+mechanisms:
+  - type: openid_connect
+    operator: institution
+    issuer: https://id.fudan.edu.cn/idp
+    discovery: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+    jwks: https://id.fudan.edu.cn/idp/oidc/getPublicKey
+    authorization_endpoint: https://id.fudan.edu.cn/idp/authCenter/authenticate
+    token_endpoint: https://id.fudan.edu.cn/idp/oidc/getOidcToken
+    userinfo_endpoint: https://id.fudan.edu.cn/idp/oidc/getUserInfo
+    grant_types: [ implicit, authorization_code, refresh_token ]
+    id_token_signing_alg_values: [ RS256, ES256, HS256 ]
+    client_registration: none published
+    evidence:
+      - url: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+        status: 200
+        content_type: application/json;charset=UTF-8
+      - url: https://id.fudan.edu.cn/idp/oidc/getPublicKey
+        status: 200
+        content_type: application/json;charset=UTF-8
+        note: One RSA key returned, kid RS256.
+  - type: saml2
+    operator: institution
+    entity_id: https://idpfudan.fudan.edu.cn/idp/shibboleth
+    metadata: https://idpfudan.fudan.edu.cn/idp/shibboleth
+    software: Shibboleth Identity Provider
+    scope: fudan.edu.cn
+    federation: CARSI (https://www.carsi.edu.cn), interfederated into eduGAIN
+    roles: [ IDPSSODescriptor, AttributeAuthorityDescriptor ]
+    protocols:
+      - urn:oasis:names:tc:SAML:2.0:protocol
+      - urn:oasis:names:tc:SAML:1.1:protocol
+      - urn:mace:shibboleth:1.0
+    evidence:
+      - url: https://idpfudan.fudan.edu.cn/idp/shibboleth
+        status: 200
+        content_type: application/xml;charset=UTF-8
+        note: 14,734-byte SAML 2.0 EntityDescriptor, captured to examples/fudan-idp-saml-metadata.xml.
+      - url: https://technical.edugain.org/api.php?action=list_entities&format=json
+        status: 200
+        note: >-
+          eduGAIN entity id 671764, registration authority https://www.carsi.edu.cn,
+          display name "Fudan University" / "复旦大学", scope fudan.edu.cn, first seen
+          2020-02-12.
+  - type: session_cookie
+    operator: institution
+    surface: https://rdr.fudan.edu.cn/datahome/
+    note: >-
+      The research data platform's JSON backend is session based and additionally requires
+      an application-specific state parameter. Unauthenticated calls return HTTP 200 with
+      a JSON refusal rather than a 401. See errors/fudan-errors.yml.
+    evidence:
+      - url: https://rdr.fudan.edu.cn/datahome/open/admin/loginUserInfo.do
+        status: 200
+        note: 'Body: {"status":4000,"message":"状态锁不得为空","data":null}'
+not_found:
+  - Public API key issuance or developer account registration.
+  - Any published OAuth client registration path.
+  - A SAML metadata document served by id.fudan.edu.cn itself (404 on /idp/shibboleth, /idp/saml2/metadata, /idp/profile/SAML2/Metadata, /idp/metadata.xml).

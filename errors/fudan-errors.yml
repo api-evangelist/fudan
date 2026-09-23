@@ -1,0 +1,42 @@
+x-method: derived
+name: Fudan University — observed error contracts
+generated: '2026-08-30'
+method: probed
+source: live probes on 2026-08-30
+x-operator: institution
+summary: >-
+  Fudan University publishes no error documentation. The shapes below were observed live
+  and are recorded exactly as returned. The notable pattern is that the research data
+  platform answers unauthenticated calls with HTTP 200 and an in-body status code, so
+  status-code-only monitoring would read a refusal as a success.
+errors:
+  - surface: https://rdr.fudan.edu.cn/datahome/
+    http_status: 200
+    content_type: application/json;charset=utf-8
+    body: '{"status":4000,"message":"状态锁不得为空","data":null}'
+    translation: 'status 4000 — "the state lock must not be empty"'
+    interpretation: >-
+      Application-level refusal returned with a 200. Observed identically on
+      /datahome/system/dic/finds.do, /datahome/open/admin/loginUserInfo.do and
+      /datahome/open/permission/findsPermissionFindDataset.do.
+    shape:
+      status: integer (application code, not HTTP)
+      message: string (Chinese)
+      data: nullable
+  - surface: https://rdr.fudan.edu.cn/datahome/
+    http_status: 404
+    content_type: application/json
+    body: '{"timestamp":"2026-08-31 05:20:05","status":404,"error":"Not Found","path":"/datahome/robots.txt"}'
+    interpretation: Default Spring Boot error body for an unmatched path under /datahome.
+  - surface: https://rdr.fudan.edu.cn/
+    http_status: 404
+    content_type: text/html
+    body: HTML meta-refresh to ./datahome
+    interpretation: >-
+      Anything outside /datahome returns a 404 whose body is a redirect page, including
+      the Dataverse paths this repository previously recorded as live.
+  - surface: https://id.fudan.edu.cn/idp/
+    http_status: 404
+    content_type: text/html;charset=UTF-8
+    body: 1,420-byte HTML shell with an empty <title>
+    interpretation: Unmatched identity-provider paths return an HTML shell, never JSON.

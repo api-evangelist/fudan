@@ -1,0 +1,91 @@
+openapi: 3.2.0
+info:
+  title: Fudan University Unified Identity (OpenID Connect Provider)…
+  version: '2026-08-30'
+  summary: The OpenID Connect provider Fudan University operates for campus single sign-on.
+  description: Fudan University operates its own unified identity service at id.fudan.edu.cn.
+  contact:
+    name: Fudan University Information Technology Office (信息化办公室)
+    url: https://xxb.fudan.edu.cn/
+  x-operator: institution
+  x-provenance:
+    method: derived
+    source: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+    derived_from: examples/fudan-openid-configuration.json
+    captured: '2026-08-30'
+    note: Derived from the institution's own live OpenID Connect discovery document. Fudan publishes no OpenAPI of its own for this service; this is API Evangelist's description of Fudan's declared endpoints, not a Fudan-published contract.
+servers:
+- url: https://id.fudan.edu.cn/idp
+  description: 'Issuer, exactly as declared by the discovery document ("issuer": "https://id.fudan.edu.cn/idp"). Probed live 2026-08-30.'
+tags:
+- name: Discovery
+  description: Machine-readable metadata about the provider.
+paths:
+  /.well-known/openid-configuration:
+    get:
+      tags:
+      - Discovery
+      operationId: getOpenIdConfiguration
+      summary: OpenID Connect discovery document
+      description: 'Returns the provider metadata. Probed live 2026-08-30: HTTP 200, application/json;charset=UTF-8, 747 bytes, no authentication required.'
+      security: []
+      responses:
+        '200':
+          description: Provider metadata.
+          content:
+            application/json:
+              schema:
+                $ref: ../json-schema/fudan-openid-configuration-schema.json
+              example:
+                issuer: https://id.fudan.edu.cn/idp
+                authorization_endpoint: https://id.fudan.edu.cn/idp/authCenter/authenticate
+                token_endpoint: https://id.fudan.edu.cn/idp/oidc/getOidcToken
+                userinfo_endpoint: https://id.fudan.edu.cn/idp/oidc/getUserInfo
+                jwks_uri: https://id.fudan.edu.cn/idp/oidc/getPublicKey
+                scopes_supported:
+                - openid
+  /oidc/getPublicKey:
+    get:
+      tags:
+      - Discovery
+      operationId: getPublicKey
+      summary: JSON Web Key Set (jwks_uri)
+      description: 'Returns the signing keys used for id_token verification. Probed live 2026-08-30: HTTP 200, application/json;charset=UTF-8, 553 bytes, no authentication required. A single RS256 RSA key was returned; the live capture is in examples/fudan-idp-jwks.json.'
+      security: []
+      responses:
+        '200':
+          description: JWK Set.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - keys
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - kty
+                      - kid
+                      properties:
+                        kty:
+                          type: string
+                          examples:
+                          - RSA
+                        kid:
+                          type: string
+                          examples:
+                          - RS256
+                        e:
+                          type: string
+                        n:
+                          type: string
+components:
+  securitySchemes:
+    fudanBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access token issued by the Fudan token endpoint. Clients are provisioned by the Fudan Information Technology Office; there is no public client registration and no public developer portal.

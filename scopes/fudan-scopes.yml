@@ -1,0 +1,28 @@
+x-method: derived
+name: Fudan University — declared scopes
+generated: '2026-08-30'
+method: probed
+source: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+x-operator: institution
+summary: >-
+  The only authorization scope Fudan University declares anywhere machine-readable is the
+  mandatory OpenID Connect scope. There is no scoped API programme, and no other surface
+  in this repository publishes a scope vocabulary.
+scopes:
+  - name: openid
+    surface: Fudan University OpenID Connect provider
+    description: >-
+      Mandatory OpenID Connect scope. The only member of scopes_supported in the live
+      discovery document; no profile, email or institution-specific scope is offered.
+    evidence:
+      url: https://id.fudan.edu.cn/idp/.well-known/openid-configuration
+      status: 200
+      location: scopes_supported
+claims:
+  note: >-
+    claims_supported in the same document, recorded here because Fudan exposes no scope
+    beyond openid and the claim list is the only released-attribute signal available.
+  values: [ sub, iss, auth_time, aud, exp, iat, uid ]
+not_found:
+  - Any scope vocabulary for the research data platform at rdr.fudan.edu.cn.
+  - Any SAML attribute-release policy published alongside the IdP metadata.
