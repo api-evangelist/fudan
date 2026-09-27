@@ -135,6 +135,7 @@ apis:
   - type: Conformance
     url: conformance/fudan-conformance.yml
 - aid: fudan:research-data-platform
+  x-published: false
   name: Fudan University Social Science Data Platform (复旦大学社会科学数据平台)
   x-operator: institution
   description: >-
