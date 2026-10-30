@@ -1,4 +1,4 @@
-# Fudan University (fudan)
+# Fudan University
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,116 +64,135 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Fudan University is a public research university in Shanghai, China, and a member of the C9 League.
-This repository catalogs Fudan's public developer and API footprint as an
-[APIs.json](https://apisjson.org) profile. It was re-profiled on 2026-08-30 under the API Evangelist
-university pipeline, which settles **who operates** each surface before anything is saved.
+Fudan University is a public research university in Shanghai, China, and a member of the national C9 League and Double First-Class programme. Its programmable footprint is small and almost entirely internal, but — unusually for this cohort — none of it is a vendor's contract wearing the university's name: every surface catalogued here runs on a host under fudan.edu.cn and is operated by Fudan itself. The real find is identity federation. Fudan operates a Shibboleth SAML 2.0 identity provider, registered with the CARSI federation and published to eduGAIN since February 2020, and it serves its own SAML metadata live at idpfudan.fudan.edu.cn. Alongside it, id.fudan.edu.cn publishes a working OpenID Connect discovery document and JWKS with no authentication required. Both are genuinely machine-readable and neither is documented anywhere Fudan publishes. Beyond identity, the Social Science Data Platform migrated off Dataverse to a custom application at rdr.fudan.edu.cn/datahome; its JSON backend answers, but it is undocumented, session-bound, and returns application-level refusals with HTTP 200. There is no developer portal, no public API key programme, no OAI-PMH, no open data portal, no robots.txt and no llms.txt on the main site, and the official GitHub organisation has zero public repositories — the university's public code lives instead in departmental lab organisations.
 
-Fudan is a clean institution case. No vendor-operated surface and no vendor tenant was found: the
-Figshare, Elsevier Pure, Canvas, WorldCat and Ex Libris tenant hostnames a university of this size
-would normally carry all fail to resolve or return an empty or error response. Every surface
-catalogued here runs on a host under `fudan.edu.cn` and is operated by Fudan itself.
+**Areas:** University · Higher Education · Education · China · Shanghai · C9 League · Identity Federation · Research Data · SSO
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/fudan/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=fudan-api-evangelist&utm_content=repo
+## Fudan University on APIs.io
 
-## Type
+Everything profiled for Fudan University is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fudan/](https://apis.io/providers/fudan/)** — or go straight to one of the APIs or properties below.
 
-- University / Public Research University / Index / Consumer / 3rd-Party
+### APIs (5)
 
-## Tags
+- [Fudan University Shibboleth Identity Provider (CARSI / eduGAIN)](https://apis.io/apis/fudan/identity-saml/) — Fudan's SAML 2.0 identity provider, entityID https://idpfudan.fudan.edu.cn/idp/shibboleth, asserting scope fudan.edu.cn. It is registered with CARSI,…
+- [Fudan University Social Science Data Platform (复旦大学社会科学数据平台)](https://apis.io/apis/fudan/research-data-platform/) — Fudan's institutional research data repository, operated by the Research Center for Social Sciences. It moved off Dataverse: dvn.fudan.edu.cn now only…
+- [Fudan University Authorization API](https://apis.io/apis/fudan/fudan-authorization-api/) — End-user authentication and token issuance.
+- [Fudan University Discovery API](https://apis.io/apis/fudan/fudan-discovery-api/) — Machine-readable metadata about the provider.
+- [Fudan University Identity API](https://apis.io/apis/fudan/fudan-identity-api/) — Claims about the authenticated end user.
 
-- University
-- Higher Education
-- Education
-- China
-- Shanghai
-- C9 League
-- Identity Federation
-- Research Data
-- Single Sign-On
+### Published properties
 
-## Surfaces
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-All three are `x-operator: institution`.
+#### JSON Schema (1)
 
-- **Fudan University Unified Identity — OpenID Connect** (`id.fudan.edu.cn`). A live OpenID Connect
-  discovery document and JWKS, both served without authentication. Issuer
-  `https://id.fudan.edu.cn/idp`. The OpenAPI in this repository is **derived from Fudan's own
-  discovery document**, not published by Fudan.
-- **Fudan University Shibboleth Identity Provider** (`idpfudan.fudan.edu.cn`). SAML 2.0 metadata
-  served by Fudan itself, entityID `https://idpfudan.fudan.edu.cn/idp/shibboleth`, scope
-  `fudan.edu.cn`, registered with the CARSI federation and published to eduGAIN since 2020-02-12.
-  This is the basis of the `shibboleth` and `saml` conformance recorded here.
-- **Fudan University Social Science Data Platform** (`rdr.fudan.edu.cn/datahome`). The institutional
-  research data repository. Its JSON backend is live but undocumented and session-bound, so **no
-  contract is saved for it**.
+The data models the API reads and writes.
 
-## Artifacts
+- [Fudan University OpenID Connect discovery document](https://apis.io/schemas/fudan/fudan-openid-configuration/)
 
-- OpenAPI: [openapi/fudan-identity-openapi.yml](openapi/fudan-identity-openapi.yml) (derived) with a
-  pristine copy in [openapi/_original/](openapi/_original/)
-- Conformance: [conformance/fudan-conformance.yml](conformance/fudan-conformance.yml)
-- Authentication: [authentication/fudan-authentication.yml](authentication/fudan-authentication.yml)
-- Scopes: [scopes/fudan-scopes.yml](scopes/fudan-scopes.yml)
-- Errors: [errors/fudan-errors.yml](errors/fudan-errors.yml)
-- Lifecycle: [lifecycle/fudan-lifecycle.yml](lifecycle/fudan-lifecycle.yml)
-- Vocabulary: [vocabulary/fudan-vocabulary.yml](vocabulary/fudan-vocabulary.yml)
-- JSON Schema: [json-schema/fudan-openid-configuration-schema.json](json-schema/fudan-openid-configuration-schema.json)
-- Verbatim captures: [examples/](examples/) — the discovery document, the JWKS, and the SAML metadata
-  exactly as returned on 2026-08-30
-- Plans & Pricing: [plans/fudan-plans-pricing.yml](plans/fudan-plans-pricing.yml)
-- Rate Limits: [rate-limits/fudan-rate-limits.yml](rate-limits/fudan-rate-limits.yml)
-- FinOps: [finops/fudan-finops.yml](finops/fudan-finops.yml)
+#### JSON-LD (1)
 
-## Timestamps
+Linked-data contexts for the provider's vocabulary.
 
-- Created: 2026-06-03
-- Modified: 2026-08-30
+- [Fudan Context](https://apis.io/jsonld/fudan/fudan-context/)
 
-## Common Properties
+#### Examples (2)
 
-- Website: https://www.fudan.edu.cn
-- Website (English): https://www.fudan.edu.cn/en/
-- Identity Federation (SAML): https://idpfudan.fudan.edu.cn/idp/shibboleth
-- Identity Federation (OIDC): https://id.fudan.edu.cn/idp/.well-known/openid-configuration
-- Research Repository: https://rdr.fudan.edu.cn/datahome/open/dataResource
-- Library: https://library.fudan.edu.cn/
-- Course Catalog / Registrar: https://jwc.fudan.edu.cn/
-- AI Policy: https://news.fudan.edu.cn/2024/1220/c3163a143685/page.htm
-- Support (IT Office): https://xxb.fudan.edu.cn/
-- GitHub: https://github.com/FudanUniversity (org exists, zero public repositories)
-- GitHub (labs): https://github.com/FudanNLP, https://github.com/FudanSELab
-- LinkedIn: https://www.linkedin.com/school/fudan-university/
-- Review: [review.yml](review.yml)
+Example requests and responses.
 
-## Corrections made on 2026-08-30
+- [Fudan Idp Jwks](https://apis.io/examples/fudan/fudan-idp-jwks/)
+- [Fudan Openid Configuration](https://apis.io/examples/fudan/fudan-openid-configuration/)
 
-- **`dvn.fudan.edu.cn` is not geo-blocked.** The earlier profile recorded an access-forbidden
-  ("禁止访问") page. It now serves a 341-byte meta-refresh redirect to
-  `https://rdr.fudan.edu.cn/datahome/`.
-- **There is no Dataverse REST API and no OAI-PMH.** `/api/info/version` and `/oai?verb=Identify`
-  return 404 on both the old and the new host. The earlier entry stated in its own text that its
-  endpoint paths "reflect standard Dataverse conventions, not Fudan-published documentation"; that
-  entry has been replaced.
-- **The vulnerability disclosure claim is withdrawn.** The 2026-07-11 source URL cannot be verified
-  and has no Wayback snapshot. The artifact is re-based on the live IT Office security section, which
-  describes internal services only and offers no reporting channel.
-- **`github.com/OpenMOSS` is not Fudan's.** It self-describes as a research group under the Shanghai
-  Innovation Institution collaborating with Fudan, and is not credited to the institution.
+#### Security (3)
 
-## Notes
+Authentication, trust centre, and vulnerability disclosure.
 
-- The OpenID Connect discovery document declares its end-session endpoint under the member name
-  `"end_session_endpoint "` — with a trailing space. A strict OpenID Connect Discovery client will
-  not find it. Recorded as observed, not corrected.
-- The research data platform answers unauthenticated calls with **HTTP 200** and an in-body refusal
-  (`{"status":4000,"message":"状态锁不得为空"}`), so status-code-only monitoring reads a refusal as a
-  success.
-- `library.fudan.edu.cn/oai` returns HTTP 200 with a generic HTML page — a soft 404, not OAI-PMH.
-- `www.fudan.edu.cn` publishes no `robots.txt`, no `llms.txt` and no `security.txt`.
-- LinkedIn returns 999 (anti-bot), which indicates the page exists rather than its absence.
+- [Fudan Authentication](https://apis.io/security/fudan/fudan-authentication/)
+- [Fudan Domain Security](https://apis.io/security/fudan/fudan-domain-security/)
+- [Fudan Vulnerability Disclosure](https://apis.io/security/fudan/fudan-vulnerability-disclosure/)
 
-## Maintainers
+#### OAuth scopes (1)
 
-- Kin Lane — kin@apievangelist.com
+The permissions the API asks for.
+
+- [Fudan Scopes](https://apis.io/scopes/fudan/fudan-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Fudan Plans Pricing](https://apis.io/plans/fudan/fudan-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Fudan Rate Limits](https://apis.io/rate-limits/fudan/fudan-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Fudan Finops](https://apis.io/finops/fudan/fudan-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.fudan.edu.cn)
+- [Support](https://xxb.fudan.edu.cn/)
+- [Blog](https://news.fudan.edu.cn/)
+- [GitHub](https://github.com/FudanUniversity)
+
+## API Evangelist rating
+
+**Kin Score 19.8** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 25.6 |
+| Contract governance | 3.8 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 5.3 |
+
+**Agent readiness 18.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 32.4** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fudan/](https://apis.io/providers/fudan/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Fudan University: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fudan/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
